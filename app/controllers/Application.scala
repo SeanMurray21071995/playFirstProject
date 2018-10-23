@@ -4,7 +4,7 @@ import javax.inject.Inject
 import play.api._
 import play.api.mvc._
 import play.api.i18n.{I18nSupport, MessagesApi}
-import models.CD
+import models.{CD, Person}
 
 class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.Environment) extends Controller with I18nSupport{
 
@@ -34,5 +34,19 @@ class Application @Inject()(val messagesApi: MessagesApi, environment: play.api.
           Redirect(routes.Application.listCDs)
         }
       )
+  }
+  def peopleList = Action {implicit request =>
+    Ok(views.html.personForm(Person.people, Person.createPerson))
+  }
+  def createPerson = Action {implicit request =>
+    val formValidationResult = Person.createPerson.bindFromRequest
+    formValidationResult.fold({formWithErrors =>
+      BadRequest(views.html.personForm(Person.people, formWithErrors))
+    },
+      {people =>
+      Person.people.append(people)
+      Redirect(routes.Application.peopleList)
+    }
+    )
   }
 }
