@@ -11,7 +11,19 @@ GET     /second                      controllers.Application.secondStatic
 #Second page with number
 GET     /second/:num                controllers.Application.second(num:Int)
 
+#Second page optional
+#GET     /second/stuff               controllers.Application.secondOptional(version: Option[String])
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#djdjdj
+GET     /cds                        controllers.Application.listCDs
+POST    /cds                        controllers.Application.createCD
+
+GET     /people                     controllers.Application.peopleList
+POST    /people                     controllers.Application.createPerson
+
+GET     /assets/*file               controllers.Assets.at(path="/public",file)
 
 

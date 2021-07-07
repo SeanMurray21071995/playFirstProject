@@ -1,0 +1,22 @@
+@(people: Seq[Person], form: Form[Person])(implicit messages: Messages)
+
+@main("People"){
+    <h1>People</h1>
+    <table>
+        <thead>
+            <tr><th>People List</th></tr>
+        </thead>
+        <tbody>
+            @for(person<-people){
+                <tr><td>@person.firstName</td><td>@person.lastName</td><td>@person.age</td></tr>
+            }
+        </tbody>
+    </table>
+    @helper.form(routes.Application.createPerson()){
+        @helper.inputText(form("firstName"), '_label -> "First Name", '_showConstraints -> false )
+        @helper.inputText(form("lastName"), '_label -> "Last Name", '_showConstraints -> false)
+        @helper.inputText(form ("age"), '_label -> "Age", '_showConstraints -> false)
+        <button type="Submit">Create Person</button>
+
+    }
+}
